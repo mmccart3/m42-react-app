@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { readUsers } from "../utils";
 
-const ReadUsers = () => {
+const ReadUsers = (cookies,setter2) => {
     //STATE VARIABLES
     const [usernames, setUsernames] = useState();
 
@@ -14,8 +14,7 @@ const ReadUsers = () => {
     //FUNCTIONS
 
     async function loadUsers() {
-        const users = await readUsers();
-        console.log(users);
+        const users = await readUsers(cookies);
         setUsernames(users);
     }
 

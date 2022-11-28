@@ -1,30 +1,23 @@
 import './App.css';
 import {useEffect, useState} from "react";
-// import MoviedCard from './components/MovieCard';
 import Login from './components/Login';
 import ReadUsers from './components/ReadUsers';
 import RegisterUser from './components/RegisterUser';
 import UpdateUser from './components/UpdateUser';
 import DeleteUser from './components/DeleteUser';
 import LogoutUser from './components/Logout';
+import { perLogin } from './utils';
+import { useCookies } from 'react-cookie';
 const API_URL = process.env.REACT_APP_API_URL
 
 function App() {
 //STATE VARIABLES
-  const [searchTerm,setSearchTerm] = useState("");
-  const [movies,setMovies] = useState([]);
   const [user,setUser] = useState("");
+  const [cookies, setCookie, removeCookie] = useCookies(['jwt_token'])
 
-  async function searchMovies(title) {
-    const req = await fetch (`${API_URL}&s=${title}`);
-    const res = await req.json();
-    setMovies(res.Search);
-    // console.log(res.Search);
-  }
-
-  // useEffect(() => {
-  //   searchMovies("Batman");
-  // },[])
+   useEffect (() => {
+     perLogin(user, setUser,cookies);
+   },[])
 
     return (
     <div className="App">
@@ -35,18 +28,17 @@ function App() {
       {user ?
       <div>
         <h2> Hello! welcome {user} you have logged in!</h2>
-        <ReadUsers />
+        <ReadUsers cookies={cookies} setter2={setCookie}/>
         <br></br>
         <UpdateUser />
         <br></br>
-        <DeleteUser />
+        <DeleteUser username={user}/>
         <br></br>
-        <LogoutUser />
+        <LogoutUser removeCookie={removeCookie} setUser={setUser}/>
       </div>
         : <div>
-        <h2>Please Login</h2>
         <h1>Login</h1> 
-        <Login setter={setUser}/>
+        <Login setter={setUser} cookies={cookies} setter2={setCookie}/>
         </div>      }
       
     </div>

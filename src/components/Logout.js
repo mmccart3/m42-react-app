@@ -1,13 +1,13 @@
 import React from "react";
-import { logoutUser } from "../utils";
 
-const LogoutUser = () => {
+const LogoutUser = ({removeCookie,setUser}) => {
     function onClickHandler() {
-        // logoutUser();
+        removeCookie('jwt_token', { path: '/' });
+        setUser("");
     }
     return (
         <div>
-            <button onClick={onClickHandler()}>LOGOUT</button>
+            <button onClick={onClickHandler}>LOGOUT</button>
         </div>
     )
 };

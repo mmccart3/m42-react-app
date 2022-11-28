@@ -1,6 +1,6 @@
-import {getCookie, writeCookie} from "../common";
+import {getCookie, getCookie2, writeCookie} from "../common";
 
-export const loginUser = async(username,email,password,setter) => {
+export const loginUser = async(username,email,password,setter, cookies,setter2) => {
     try {
         const response = await fetch("http://localhost:5001/loginuser",
         {
@@ -13,13 +13,10 @@ export const loginUser = async(username,email,password,setter) => {
             })
         });
         const data = await response.json();
-        console.log(data);
         setter(data.username);
-        writeCookie("jwt_token",data.token,7)
-        console.log(data.token);
-        console.log(data.username);
+        writeCookie("jwt_token", data.token, 7 ,cookies , setter2);
     } catch (error) {
-        console.log(error)
+        console.log(error);
     }
 };
 
@@ -37,17 +34,16 @@ export async function registerUser (username, email, password, setter) {
         }
         );
         const data = await response.json;
-        console.log(data);
         setter(data.username);
     } catch (error) {
         console.log(error);
     }
 }
 
-export async function readUsers (cookie) {
+export async function readUsers (cookies) {
     try {
-        const cookie = getCookie("jwt_token");
-        console.log(cookie);
+        // const cookie = getCookie("jwt_token");
+        const cookie = getCookie(cookies);
         const response = await fetch(`http://localhost:5001/readUsers`,
         {
             method: "GET",
@@ -78,19 +74,11 @@ export async function updateUser (username, key, value) {
         }
         );
         const data = await response.json();
-        console.log(data);
     } catch (error) {
         console.log(error)
     }
 }
 
-export async function logoutUser() {
-    try {
-        writeCookie("jwt_token","",0);
-    } catch (error) {
-        console.log(error)
-    }
-}
 
 export async function deleteUser(username) {
     try {
@@ -104,8 +92,32 @@ export async function deleteUser(username) {
         }
         );
         const data = await response.json();
-        console.log(data);
     } catch (error) {
         console.log(error);
     };
+}
+
+
+export const perLogin = async (user, setUser, cookies) => {
+    try {
+        const token = getCookie2(cookies);
+        if (token) {
+            const response = await fetch(`http://localhost:5001/loginUser`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+            const data = await response.json();
+            const datauser = data.username;
+            setUser(datauser);
+        }
+            else {
+                setUser("");
+            }
+
+    } catch (error) {
+        console.log(error);
+    }
 }

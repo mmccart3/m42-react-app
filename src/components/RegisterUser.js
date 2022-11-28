@@ -11,7 +11,6 @@ const  RegisterUser = ({setter}) => {
     //FUNCTIONS
     async function submitHandler(event) {
         event.preventDefault();
-        console.log(username, email, password);
         await registerUser(username, email, password, setter);
     };
 

@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { loginUser } from "../utils";
 
-const Login = ({setter}) => {
+const Login = ({setter,cookies, setter2}) => {
 // STATE
     const [username, setUsername] = useState();
     const [email, setEmail] = useState();
@@ -10,10 +10,7 @@ const Login = ({setter}) => {
 //FUNCTIONS
 async function submitHandler (event) {
     event.preventDefault();
-    console.log(username);
-    console.log(email);
-    console.log(password);
-    await loginUser(username,email,password,setter);
+    await loginUser(username, email, password, setter, cookies, setter2);
 }
 
 //MAIN

@@ -1,36 +1,24 @@
-import { useCookies } from 'react-cookie';
+export function writeCookie(key, value, days, cookies, setter2) {
 
-export function writeCookie(key, value, days) {
-    const [cookies, setCookie] = useCookies()
     const date = new Date();
     // get current date and time
 
     days = days || 365;
 
-    date.setTime(+ date + (days * 86400000));
+    const expires = date.setTime(+ date + (days * 86400000));
     // 86400000 = number of milliseconds in a day 24 * 60 * 60 * 1000
     // setTime takes current time and adds the number of days for cookie to exist
     
-    const cookie = document.cookie = key + "=" + value + "; expires =" + date.toGMTString() + "; path=/";
-    setCookie(cookie);
-    console.log(cookies);
+    // const cookie = document.cookie = key + "=" + value + "; expires =" + date.toGMTString() + "; path=/";
+    setter2(key, value, {path: '/'}, expires)
 
-    return cookie;
+    return cookies;
 };
 
-export function getCookie(cookiename) {
-    const name = cookiename + "=";
-    const decodedCookie = decodeURIComponent(document.cookie);
-    console.log(decodedCookie);
-    const cookieArray = decodedCookie.split(";");
-    for (let index=0; index < cookieArray.length; index++) {
-        let c = cookieArray[index];
-        while (c.charAt(0) === " ") {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) === 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return false;
+export function getCookie(cookies) {
+    return cookies.cookies.jwt_token;
+}
+
+export function getCookie2(cookies) {
+    return cookies.jwt_token;
 }

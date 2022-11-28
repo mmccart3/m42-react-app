@@ -1,19 +1,17 @@
 import React from "react";
 import { deleteUser } from "../utils";
 
-const DeleteUser = ({user}) => {
+const DeleteUser = ({username}) => {
     // FUNCTIONS
     async function deleteAcc(event) {
         event.preventDefault();
-        await deleteUser(user);
+        await deleteUser(username);
     }
 
     // MAIN
     return (
-        <form onSubmit = {deleteAcc} >
-            <button type = "submit"> Delete your account</button>
-        </form>
-    )
+            <button type = "submit" onClick={deleteAcc}> Delete your account</button>
+            )
 };
 
 export default DeleteUser;
