@@ -1,6 +1,6 @@
 import {getCookie, getCookie2, writeCookie} from "../common";
 
-export const loginUser = async(username,email,password,setter, cookies,setter2) => {
+export const loginUser = async(username, email, password, setter, cookies, setter2) => {
     try {
         const response = await fetch("http://localhost:5001/loginuser",
         {
@@ -42,7 +42,6 @@ export async function registerUser (username, email, password, setter) {
 
 export async function readUsers (cookies) {
     try {
-        // const cookie = getCookie("jwt_token");
         const cookie = getCookie(cookies);
         const response = await fetch(`http://localhost:5001/readUsers`,
         {

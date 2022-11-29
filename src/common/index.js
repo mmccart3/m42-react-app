@@ -9,7 +9,6 @@ export function writeCookie(key, value, days, cookies, setter2) {
     // 86400000 = number of milliseconds in a day 24 * 60 * 60 * 1000
     // setTime takes current time and adds the number of days for cookie to exist
     
-    // const cookie = document.cookie = key + "=" + value + "; expires =" + date.toGMTString() + "; path=/";
     setter2(key, value, {path: '/'}, expires)
 
     return cookies;

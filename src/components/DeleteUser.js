@@ -3,8 +3,7 @@ import { deleteUser } from "../utils";
 
 const DeleteUser = ({username}) => {
     // FUNCTIONS
-    async function deleteAcc(event) {
-        event.preventDefault();
+    async function deleteAcc() {
         await deleteUser(username);
     }
 
