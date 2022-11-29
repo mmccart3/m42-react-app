@@ -14,11 +14,14 @@ function App() {
 //STATE VARIABLES
   const [user,setUser] = useState("");
   const [cookies, setCookie, removeCookie] = useCookies(['jwt_token'])
+  
 
-   useEffect (() => {
-     perLogin(user, setUser,cookies);
-   },[])
+  //CHECK FOR COOKIE AT STARTUP 
+  useEffect (() => {
+    perLogin(user, setUser, cookies);
+  },[])
 
+  //MAIN
     return (
     <div className="App">
       <h1>Register</h1>
@@ -28,11 +31,12 @@ function App() {
       {user ?
       <div>
         <h2> Hello! welcome {user} you have logged in!</h2>
-        <ReadUsers cookies={cookies} setter2={setCookie}/>
+        <ReadUsers cookies={cookies} />
         <br></br>
         <UpdateUser />
         <br></br>
-        <DeleteUser username={user}/>
+        <DeleteUser username={user} removeCookie={removeCookie} setUser={setUser}/>
+        <br></br>
         <br></br>
         <LogoutUser removeCookie={removeCookie} setUser={setUser}/>
       </div>

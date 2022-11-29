@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { readUsers } from "../utils";
 
-const ReadUsers = (cookies,setter2) => {
+const ReadUsers = (cookies) => {
     //STATE VARIABLES
     const [usernames, setUsernames] = useState();
 
@@ -12,12 +12,12 @@ const ReadUsers = (cookies,setter2) => {
     },[])
 
     //FUNCTIONS
-
     async function loadUsers() {
         const users = await readUsers(cookies);
         setUsernames(users);
     }
 
+    //MAIN
     return (
         <div className="container">
             {
